@@ -4,9 +4,9 @@ from datetime import datetime
 class Converter:
 
     def convert_unix_to_rfc(self,datestr):
-        if not match(r'[0-9]+(\.[0-9]+)?', datestr):
+        if not match(r'^[0-9]+(\.[0-9]+)?$', datestr):
             raise ConversionException({'date': 'provided date string was not unix formatted'})
-        return datetime.fromtimestamp(float(datestr))
+        return datetime.fromtimestamp(float(datestr)).isoformat('T')+'Z'
 
     def convert_rfc_to_unix(self):
         return None
