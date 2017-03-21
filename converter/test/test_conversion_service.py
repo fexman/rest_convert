@@ -20,5 +20,8 @@ class TestConversionService(unittest.TestCase):
         with self.assertRaises(ConversionException):
             self.conv.convert_unix_to_rfc('1490107042.')
 
+    def test_rfc_dummy(self):
+        print(self.conv.convert_rfc_to_unix('2017-03-21T15:37:22.123434Z'))
+
 if __name__ == '__main__':
     unittest.main()
