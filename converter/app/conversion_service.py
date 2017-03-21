@@ -28,10 +28,13 @@ class Converter:
         try:
             date = parser.parse(datestr)
             unixtime = float(time.mktime(date.timetuple()))
-            #somewhat hacky, but mktime drops the floating precision
-            return str(unixtime).split('.')[0]+'.'+str(date.microsecond)
+            microseconds = '.'+str(date.microsecond) if date.microsecond != 0 else ''
+
+            #somewhat hacky, but mktime drops the floating precision and micros can't be added mathematically
+            return str(unixtime).split('.')[0]+microseconds
+
         except ValueError:
-            raise ConversionException({'date': 'provided date string was not properly '+format+'-formatted'})
+            raise ConversionException({'date': 'provided date string was not properly rfc3339-formatted'})
 
     def _test_date_(self,datestr,regex,format):
         if not match(regex, datestr):
