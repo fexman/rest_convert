@@ -6,6 +6,9 @@ class TestConversionService(unittest.TestCase):
     def setUp(self):
         self.conv = Converter()
 
+    def test_unix_ZeroValue(self):
+        self.conv.convert_unix_to_rfc('0')
+
     def test_unix_InvalidAlphabeticTextAsInput(self):
         with self.assertRaises(ConversionException):
             self.conv.convert_unix_to_rfc('letters')

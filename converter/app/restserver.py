@@ -10,14 +10,29 @@ converter = Converter()
 
 @app.route('/convert', methods=['POST'])
 def create_task():
-    print(request.form)
+
+    #initial test if form data is provided
     if not request.form:
-        return jsonify({'message': 'Invalid request!', 'errors': { 'request': 'Be form encoded'}}), 400
+        return jsonify({'message': 'Invalid request!', 'errors': { 'request': 'Must be form encoded'}}), 400
     try:
+
+        #ensure valid form data as input
         form_validator.validate_structure(request.form)
         form_validator.validate_content(request.form)
 
-        return jsonify({'message': 'Welcome!'})
+        input = request.form['date']
+
+        #obtain fitting converter func
+        if request.form['format'] == 'unix':
+            convert_func = converter.convert_unix_to_rfc
+            out_format = 'rfc3339'
+        else:
+            convert_func = converter.convert_rfc_to_unix
+            out_format = 'unix'
+
+        print(input)
+        #convert and return response
+        return jsonify({'input':input,'output':convert_func(input),'format':out_format})
 
     except FormValidationException as e:
         return jsonify({'message': 'Invalid form data!', 'errors': e.errors}), 400
