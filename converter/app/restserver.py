@@ -9,7 +9,7 @@ form_validator = Validator()
 converter = Converter()
 
 @app.route('/convert', methods=['POST'])
-def create_task():
+def convert():
 
     #initial test if form data is provided
     if not request.form:

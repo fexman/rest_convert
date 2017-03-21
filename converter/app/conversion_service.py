@@ -15,8 +15,11 @@ class Converter:
         :param datestr:
         :return:
         """
+
         self._test_date_(datestr,self.regex_unix,'unix')
-        return datetime.fromtimestamp(float(datestr)).isoformat('T')+'Z'
+        date = datetime.fromtimestamp(float(datestr))
+
+        return date.isoformat('T')+'Z'
 
     def convert_rfc_to_unix(self,datestr):
         """
@@ -24,6 +27,7 @@ class Converter:
         :param datestr:
         :return:
         """
+
         self._test_date_(datestr,self.regex_rfc,'rfc3339')
         try:
             date = parser.parse(datestr)
